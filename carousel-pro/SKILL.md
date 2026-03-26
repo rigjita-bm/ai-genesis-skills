@@ -54,7 +54,7 @@ python carousel_pro_v3.py "Product Launch" --ab-test
 python carousel_pro_v3.py "Marketing Tips" --batch-png
 
 # Multi-language support
-python carousel_pro_v3.py "Курсы йоги" --language=ru --mode=wellness
+python carousel_pro_v3.py "Yoga Courses" --language=es --mode=wellness
 
 # Full analytics
 python carousel_pro_v3.py "SaaS Growth" --export=both --ab-test
