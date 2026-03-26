@@ -312,15 +312,15 @@ class BuyingIntentCalculator:
         
         # Price inquiry
         price_mentioned = any(
-            'price' in conv.get('text', '').lower() or 
+            'price' in conv.get('text', '').lower() or
             'cost' in conv.get('text', '').lower() or
-            'сколько' in conv.get('text', '').lower()
+            'budget' in conv.get('text', '').lower()
             for conv in lead.conversation_memory
         )
         factors['price_inquiry'] = 100 if price_mentioned else 20
         
         # Timeframe mention
-        timeframe_words = ['this week', 'next week', 'asap', 'soon', 'срочно', 'быстро', 'this month']
+        timeframe_words = ['this week', 'next week', 'asap', 'soon', 'urgent', 'fast', 'this month']
         timeframe_mentioned = any(
             any(w in conv.get('text', '').lower() for w in timeframe_words)
             for conv in lead.conversation_memory
@@ -372,22 +372,22 @@ class EmotionalStateTracker:
         current = lead.emotional_state
         
         # Excitement indicators
-        if any(w in text_lower for w in ['amazing', 'perfect', 'love it', 'отлично', 'супер', 'wow', '🔥']):
+        if any(w in text_lower for w in ['amazing', 'perfect', 'love it', 'great', 'awesome', 'wow', '🔥']):
             if EmotionalState.EXCITED in cls.TRANSITIONS.get(current, []):
                 return EmotionalState.EXCITED
         
         # Concern indicators
-        if any(w in text_lower for w in ['expensive', 'too much', 'not sure', 'дорого', 'сомневаюсь', 'but', 'however']):
+        if any(w in text_lower for w in ['expensive', 'too much', 'not sure', 'hesitant', 'but', 'however']):
             if EmotionalState.CONCERNED in cls.TRANSITIONS.get(current, []):
                 return EmotionalState.CONCERNED
         
         # Commitment indicators
-        if any(w in text_lower for w in ['lets do it', 'sign me up', 'ready to buy', 'давайте', 'готов', 'when can we start']):
+        if any(w in text_lower for w in ['lets do it', 'sign me up', 'ready to buy', 'go ahead', 'ready', 'when can we start']):
             if EmotionalState.COMMITTED in cls.TRANSITIONS.get(current, []):
                 return EmotionalState.COMMITTED
         
         # Dormant indicators
-        if any(w in text_lower for w in ['not now', 'later', 'maybe next year', 'потом', 'не сейчас']):
+        if any(w in text_lower for w in ['not now', 'later', 'maybe next year', 'postpone', 'not yet']):
             return EmotionalState.DORMANT
         
         return None
@@ -681,9 +681,9 @@ def extract_lead_v2(text: str, source: str = "telegram") -> LeadProfile:
     
     # Detect emotional state from first message
     text_lower = text.lower()
-    if any(w in text_lower for w in ['interested', 'хочу', 'want', 'love', 'нравится']):
+    if any(w in text_lower for w in ['interested', 'want', 'love', 'like']):
         profile.emotional_state = EmotionalState.EXCITED
-    elif any(w in text_lower for w in ['expensive', 'дорого', 'not sure', 'maybe']):
+    elif any(w in text_lower for w in ['expensive', 'not sure', 'hesitant', 'maybe']):
         profile.emotional_state = EmotionalState.CONCERNED
     
     # Set initial temperature based on state
@@ -713,7 +713,7 @@ Commands:
   signals                 Show all active signals
 
 Examples:
-  python crm_v2.py add "Анна, +7 999 123-45-67, interested in automation"
+  python crm_v2.py add "Anna, +1 555 123-45-67, interested in automation"
   python crm_v2.py dashboard
         """)
         return
