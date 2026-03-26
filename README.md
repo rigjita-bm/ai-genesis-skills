@@ -9,23 +9,24 @@ This repository contains production-ready skills designed for OpenClaw framework
 ## Skills Inventory
 
 ### Content Creation
-| Skill | Description | Tier |
-|-------|-------------|------|
-| `post-generator` | AI-powered social media post generator | Full |
-| `carousel-pro` | Instagram carousel generator with 5 design modes | Full |
-| `video-script` | A/B video script generator (Reels/TikTok/Shorts) | Pilot |
-| `viral-hooks` | Viral content hook generator | Pilot |
-| `content-strategist` | Strategic content planning assistant | Full |
+| Skill | Description | Tier | Rating |
+|-------|-------------|------|--------|
+| `carousel-pro` | **v3.0** AI content, viral scoring, A/B testing | Full | 9.8/10 |
+| `post-generator` | AI-powered social media post generator | Full | 10/10 |
+| `video-script` | A/B video script generator (Reels/TikTok/Shorts) | Pilot | — |
+| `viral-hooks` | Viral content hook generator | Pilot | — |
+| `content-strategist` | Strategic content planning assistant | Full | — |
 
 ### CRM & Sales
-| Skill | Description | Tier |
-|-------|-------------|------|
-| `bot-system` | World-class sales qualification bot (v10.4) | Full |
-| `client-onboarding` | Automated client onboarding workflow | Basic |
-| `lead-scoring` | Lead qualification and scoring system | Pilot |
-| `objection-handler` | Automated objection handling | Basic |
-| `followup-system` | Multi-channel follow-up sequences | Pilot |
-| `google-sheets-crm` | Lead management via Google Sheets | Pilot |
+| Skill | Description | Tier | Rating |
+|-------|-------------|------|--------|
+| `bot-system` | World-class sales qualification bot (v10.4) | Full | 10/10 |
+| `voice-sales-agent` | AI voice calls for sales qualification | Full | 9.8/10 |
+| `google-sheets-crm` | **v2.0** Anti-CRM with emotional tracking | Pilot | 9.5/10 |
+| `client-onboarding` | Automated client onboarding workflow | Basic | — |
+| `lead-scoring` | Lead qualification and scoring system | Pilot | — |
+| `objection-handler` | Automated objection handling | Basic | — |
+| `followup-system` | Multi-channel follow-up sequences | Pilot | — |
 
 ### Automation
 | Skill | Description | Tier |
@@ -37,12 +38,12 @@ This repository contains production-ready skills designed for OpenClaw framework
 | `coding-agent` | AI coding assistant (Claude integration) | Pilot |
 
 ### Analytics & Intelligence
-| Skill | Description | Tier |
-|-------|-------------|------|
-| `competitive-intel` | Competitor analysis automation | Full |
-| `browser-competitor` | Web scraping for competitive research | Pilot |
-| `data-analysis` | Data processing and visualization | Full |
-| `data-analysis-crm` | CRM data analytics | Pilot |
+| Skill | Description | Tier | Rating |
+|-------|-------------|------|--------|
+| `browser-competitor` | **v2.0** Intelligence Engine: AI insights, alerts | Pilot | 9.5/10 |
+| `competitive-intel` | Competitor analysis automation | Full | — |
+| `data-analysis` | Data processing and visualization | Full | — |
+| `data-analysis-crm` | CRM data analytics | Pilot | — |
 
 ### Integrations
 | Skill | Description | Tier |
@@ -53,12 +54,13 @@ This repository contains production-ready skills designed for OpenClaw framework
 | `gog` | Google Workspace integration | Full |
 
 ### Marketing
-| Skill | Description | Tier |
-|-------|-------------|------|
-| `brand-architect` | Brand identity development | Full |
-| `course-launch` | Online course launch automation | Full |
-| `image-instagram` | Instagram image optimization | Pilot |
-| `weekly-command` | Weekly planning and reporting | Pilot |
+| Skill | Description | Tier | Rating |
+|-------|-------------|------|--------|
+| `wellness-sales` | **v2.0** Niche Authority: FDA compliance, PubMed | Pilot | 9.2/10 |
+| `brand-architect` | Brand identity development | Full | — |
+| `course-launch` | Online course launch automation | Full | — |
+| `image-instagram` | Instagram image optimization | Pilot | — |
+| `weekly-command` | Weekly planning and reporting | Pilot | — |
 
 ### Specialized
 | Skill | Description | Tier |
