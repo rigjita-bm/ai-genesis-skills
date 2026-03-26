@@ -149,7 +149,7 @@ Set up Google Sheets API:
 
 ```bash
 # Add a relationship (not a "lead")
-python crm_v2.py add "Анна, +7 999 123-45-67, interested in automation for my salon"
+python crm_v2.py add "Anna, +1 555 123-45-67, interested in automation for my salon"
 
 # View relationship dashboard
 python crm_v2.py dashboard
@@ -170,7 +170,7 @@ from crm_v2 import GoogleSheetsCRMV2, LeadProfile, extract_lead_v2
 crm = GoogleSheetsCRMV2()
 
 # Add relationship with full context
-profile = extract_lead_v2("Мария, maria@company.com, wants to automate customer support")
+profile = extract_lead_v2("Maria, maria@company.com, wants to automate customer support")
 result = crm.add_lead(profile)
 
 print(f"Added: {result['message']}")
