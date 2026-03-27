@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Voice Sales Agent v1.0 — AI Voice Calls for Sales Qualification
-Human-like conversations with natural Russian-accented voices for immigrant business owners
+Human-like conversations with natural voices for immigrant business owners
 """
 
 import json
@@ -63,7 +63,7 @@ class VoiceSalesAgent:
     AI Voice Sales Agent for qualification calls
     
     Features:
-    - Natural Russian-accented voices (for immigrant businesses)
+    - Multi-language support (English, Russian, Spanish)
     - Dynamic call scripts with branching
     - Real-time qualification scoring
     - Objection handling library
@@ -81,7 +81,7 @@ class VoiceSalesAgent:
             'provider': 'elevenlabs',  # or 'openai', 'google'
             'default_voice': 'onyx',  # warm male
             'female_voice': 'nova',   # warm female
-            'accent': 'slight_russian',  # subtle accent for authenticity
+            'accent': 'natural',  # subtle accent for authenticity
             'speed': 0.95,  # slightly slower for clarity
             'stability': 0.7,
             'similarity_boost': 0.8
@@ -128,42 +128,42 @@ class VoiceSalesAgent:
         scripts = {
             "qualification": CallScript(
                 name="Sales Qualification",
-                opening="""Здравствуйте, {name}! Меня зовут {agent_name}, я из AI Genesis. 
-Вы оставляли заявку на нашем сайте насчёт автоматизации для {business_type}. 
-У вас есть 5 минут, чтобы я рассказал, как это работает?""",
+                opening="""Hello {name}! This is {agent_name} from AI Genesis. 
+You left a request on our website about automation for {business_type}. 
+Do you have 5 minutes for me to explain how it works?""",
                 qualification_questions=[
                     {
                         "id": "business_type",
-                        "question": "Расскажите, чем занимается ваш бизнес? Сколько у вас клиентов в неделю?",
+                        "question": "Tell me about your business. How many clients do you have per week?",
                         "purpose": "Understand business size and needs",
                         "follow_up": {
-                            "low_volume": "А вы вручную всё ведёте? Как долго это занимает?",
-                            "high_volume": "Как вы справляетесь с таким потоком? Есть ли система записи?"
+                            "low_volume": "Are you managing everything manually? How long does that take?",
+                            "high_volume": "How do you handle that volume? Do you have a booking system?"
                         }
                     },
                     {
                         "id": "pain_point",
-                        "question": "Что больше всего отнимает ваше время сейчас?",
+                        "question": "What takes most of your time right now?",
                         "purpose": "Identify main pain point",
-                        "options": ["записи", "переписка", "напоминания", "документы", "другое"]
+                        "options": ["bookings", "messaging", "reminders", "documents", "other"]
                     },
                     {
                         "id": "current_solution",
-                        "question": "Пробовали ли уже что-то автоматизировать?",
+                        "question": "Have you tried automating anything before?",
                         "purpose": "Check previous experience",
                         "follow_up": {
-                            "yes": "Что не устроило в прошлом решении?",
-                            "no": "Почему решили посмотреть сейчас? Что изменилось?"
+                            "yes": "What didn't work with your previous solution?",
+                            "no": "Why are you looking at this now? What changed?"
                         }
                     },
                     {
                         "id": "decision_maker",
-                        "question": "Кроме вас, кто ещё принимает решения о внедрении?",
+                        "question": "Besides you, who else makes decisions about implementation?",
                         "purpose": "Identify decision makers"
                     },
                     {
                         "id": "budget",
-                        "question": "Если мы найдём решение, которое сэкономит вам 10 часов в неделю, в какой бюджет вы смотрите?",
+                        "question": "If we find a solution that saves you 10 hours per week, what budget are you looking at?",
                         "purpose": "Budget qualification",
                         "indicators": {
                             "under_100": "probably_not_ready",
@@ -174,110 +174,110 @@ class VoiceSalesAgent:
                     },
                     {
                         "id": "timeline",
-                        "question": "Насколько срочно вам нужно решение?",
+                        "question": "How urgent is this need?",
                         "purpose": "Timeline qualification",
-                        "options": ["срочно", "в течение месяца", "просто смотрю"]
+                        "options": ["urgent", "within_month", "just_looking"]
                     }
                 ],
                 objection_handlers={
-                    "дорого": """Я понимаю. Давайте посчитаем: сколько часов в неделю вы тратите на переписку с клиентами? 
-Умножьте на вашу часовую ставку — это ваша реальная стоимость. 
-Пилот за $350 окупается, если экономит всего 7 часов.""",
+                    "too_expensive": """I understand. Let's calculate: how many hours per week do you spend on client communication? 
+Multiply by your hourly rate — that's your real cost. 
+The $350 pilot pays for itself if it saves just 7 hours.""",
                     
-                    "не сейчас": """Конечно, выберите удобное время. Но могу я задать один вопрос? 
-Что изменится через месяц? Иногда "потом" превращается в "уже поздно", когда клиенты уходят к конкурентам с автоматизацией.""",
+                    "not_now": """Of course, choose a convenient time. But can I ask one question? 
+What will change in a month? Sometimes "later" becomes "too late" when clients go to competitors with automation.""",
                     
-                    "нужно подумать": """Разумно. Подумайте над этим: сколько клиентов вы потеряли за последний месяц из-за того, 
-что не успели ответить или забыли перезвонить? Одного клиента достаточно, чтобы окупить пилот.""",
+                    "need_to_think": """Reasonable. Think about this: how many clients did you lose last month because 
+you didn't respond in time or forgot to call back? Just one client is enough to pay for the pilot.""",
                     
-                    "не уверен что поможет": """Сомнения нормальны. Поэтому у нас есть пилот — вы тестируете 2 недели, 
-видите реальные цифры, и только потом решаете. Никакого риска. Если не понравится — вернём деньги.""",
+                    "not_sure": """Doubts are normal. That's why we have a pilot — you test for 2 weeks, 
+see real numbers, and only then decide. No risk. If you don't like it — we refund your money.""",
                     
-                    "уже есть система": """Отлично! Значит, вы понимаете ценность автоматизации. 
-Вопрос: ваша текущая система решает проблему полностью или есть "слепые зоны"?""",
+                    "have_system": """Great! That means you understand the value of automation. 
+Question: does your current system solve the problem completely or are there "blind spots"?""",
                     
-                    "нет времени": """Это именно то, с чем мы помогаем. За 20-минутный звонок я покажу, 
-как вернуть вам 10+ часов в неделю. Это инвестиция времени, которая окупается в первую же неделю.""",
+                    "no_time": """That's exactly what we help with. In a 20-minute call I'll show you 
+how to get back 10+ hours per week. It's a time investment that pays off in the first week.""",
                     
-                    "сам сделаю": """Уважаю! Вы техничный человек. Вопрос: сколько времени займёт разработка? 
-И главное — кто будет поддерживать, когда что-то сломается? Иногда дешевле купить, чем создавать своё.""",
+                    "build_myself": """Respect! You're a technical person. Question: how long will development take? 
+And importantly — who will support it when something breaks? Sometimes it's cheaper to buy than to build.""",
                     
-                    "надо спросить партнёра": """Конечно, важное решение. Давайте так: я пришлю короткое видео — 3 минуты, 
-как работает система. Покажите партнёру, и если заинтересуетесь — договоримся о созвоне втроём. Окей?"""
+                    "ask_partner": """Of course, it's an important decision. Here's what I'll do: I'll send a short 3-minute video 
+showing how the system works. Show it to your partner, and if you're interested — let's schedule a call together. Okay?"""
                 },
                 closing_options=[
-                    "Давайте я назначу встречу на этой неделе. Какой день удобнее — вторник или четверг?",
-                    "Я пришлю демо-видео и PDF с ценами. Какой мессенджер удобнее — Telegram или WhatsApp?",
-                    "Давайте запустим пилот. Он займёт 20 минут настройки, и вы увидите результат уже сегодня.",
-                    "Я понимаю, что нужно время. Могу я перезвонить через неделю? Или напишу вам тогда?"
+                    "Let me schedule a meeting this week. Which day works better — Tuesday or Thursday?",
+                    "I'll send a demo video and pricing PDF. Which messenger works better for you — Telegram or WhatsApp?",
+                    "Let's launch the pilot. It takes 20 minutes to set up, and you'll see results today.",
+                    "I understand you need time. Can I call back next week? Or should I message you then?"
                 ],
                 fallback_responses=[
-                    "Понял вас. Расскажите подробнее?",
-                    "Интересно. А что по этому поводу думаете?",
-                    "Понятно. Давайте вернёмся к главному — какую задачу хотите решить в первую очередь?",
-                    "Записал. Ещё один вопрос..."
+                    "I understand. Tell me more?",
+                    "Interesting. What do you think about that?",
+                    "Got it. Let's get back to the main thing — which problem do you want to solve first?",
+                    "Noted. One more question..."
                 ]
             ),
             
             "follow_up": CallScript(
                 name="Follow-Up Call",
-                opening="""Привет, {name}! Это {agent_name} из AI Genesis. 
-Неделю назад обсуждали автоматизацию для {business_type}. 
-Как дела? Успели подумать?""",
+                opening="""Hi {name}! This is {agent_name} from AI Genesis. 
+We discussed automation for {business_type} a week ago. 
+How are things? Did you have time to think?""",
                 qualification_questions=[
                     {
                         "id": "decision_progress",
-                        "question": "Как продвигается с решением?",
+                        "question": "How is the decision going?",
                         "purpose": "Check decision progress"
                     },
                     {
                         "id": "new_info",
-                        "question": "Появились ли новые вопросы после нашего разговора?",
+                        "question": "Any new questions after our conversation?",
                         "purpose": "Address new concerns"
                     },
                     {
                         "id": "competition",
-                        "question": "Смотрели ещё чьи-то решения? Что вам там понравилось?",
+                        "question": "Did you look at anyone else's solutions? What did you like there?",
                         "purpose": "Competitive intelligence"
                     }
                 ],
                 objection_handlers={
-                    "ещё думаю": "Понимаю. Что именно осталось неясным? Может, уточню детали?",
-                    "выбрал другого": "Жаль, что не мы. Можно узнать, что стало решающим фактором? Это поможет нам улучшиться.",
-                    "не актуально": "Понял. Что изменилось? Если передумаете — всегда на связи."
+                    "still_thinking": "I understand. What exactly is still unclear? Maybe I can clarify details?",
+                    "chose_another": "Sorry it's not us. Can I ask what was the deciding factor? It will help us improve.",
+                    "not_relevant": "Got it. What changed? If you reconsider — we're always here."
                 },
                 closing_options=[
-                    "Давайте попробуем пилот. Если не зайдёт — просто откажетесь, без обид.",
-                    "Я пришлю новый кейс, который может быть релевантен. Посмотрите?",
-                    "Окей, тогда я напомню через месяц, если вы не против?"
+                    "Let's try the pilot. If it doesn't work — just decline, no hard feelings.",
+                    "I'll send a new case study that might be relevant. Want to see?",
+                    "Okay, then I'll remind you in a month, if you don't mind?"
                 ],
                 fallback_responses=[
-                    "Понятно. Спасибо за честность.",
-                    "Записал. Будем на связи!"
+                    "Got it. Thanks for being honest.",
+                    "Noted. We'll be in touch!"
                 ]
             ),
             
             "appointment_reminder": CallScript(
                 name="Appointment Reminder",
-                opening="""Здравствуйте, {name}! Напоминаю, что завтра в {time} у нас созвон 
-насчёт автоматизации {business_type}. Вы подтверждаете?""",
+                opening="""Hello {name}! Reminding you that tomorrow at {time} we have a call 
+about automation for {business_type}. Do you confirm?""",
                 qualification_questions=[
                     {
                         "id": "confirmation",
-                        "question": "Завтра в {time} удобно?",
+                        "question": "Is tomorrow at {time} convenient?",
                         "purpose": "Confirm appointment"
                     }
                 ],
                 objection_handlers={
-                    "нужно перенести": "Конечно. На когда перенести?",
-                    "не могу": "Понял. Давайте перенесём. Какая неделя удобнее?"
+                    "need_reschedule": "Of course. When should we reschedule?",
+                    "cant_make_it": "Got it. Let's reschedule. Which week works better?"
                 },
                 closing_options=[
-                    "Отлично, жду вас завтра в {time}. Пришлю ссылку за час до звонка.",
-                    "Перенёс на {new_time}. До встречи!"
+                    "Great, see you tomorrow at {time}. I'll send a link an hour before the call.",
+                    "Rescheduled to {new_time}. See you then!"
                 ],
                 fallback_responses=[
-                    "Отлично, до завтра!"
+                    "Great, see you tomorrow!"
                 ]
             )
         }
@@ -291,8 +291,8 @@ class VoiceSalesAgent:
         # Personalize opening
         opening = script.opening.format(
             name=contact.get('name', ''),
-            agent_name=contact.get('agent_name', 'Алекс'),
-            business_type=contact.get('business_type', 'вашего бизнеса')
+            agent_name=contact.get('agent_name', 'Alex'),
+            business_type=contact.get('business_type', 'your business')
         )
         
         return opening
@@ -350,15 +350,15 @@ class VoiceSalesAgent:
         
         # Add simulated responses (in production, these would be real)
         simulated_flow = [
-            {'speaker': 'customer', 'text': 'Да, удобно, расскажите'},
+            {'speaker': 'customer', 'text': 'Yes, convenient, tell me more'},
             {'speaker': 'agent', 'text': script.qualification_questions[0]['question']},
-            {'speaker': 'customer', 'text': 'У меня салон красоты, около 50 клиентов в неделю'},
-            {'speaker': 'agent', 'text': 'Отлично! А как сейчас ведёте записи?'},
-            {'speaker': 'customer', 'text': 'Вручную, в блокноте и WhatsApp'},
+            {'speaker': 'customer', 'text': 'I have a beauty salon, about 50 clients per week'},
+            {'speaker': 'agent', 'text': 'Great! How do you manage appointments now?'},
+            {'speaker': 'customer', 'text': 'Manually, in a notebook and WhatsApp'},
             {'speaker': 'agent', 'text': script.qualification_questions[1]['question']},
-            {'speaker': 'customer', 'text': 'В основном переписка отнимает время'},
+            {'speaker': 'customer', 'text': 'Mostly messaging takes time'},
             {'speaker': 'agent', 'text': script.qualification_questions[4]['question']},
-            {'speaker': 'customer', 'text': 'Ну, если реально поможет, готов выделить до 500 долларов'},
+            {'speaker': 'customer', 'text': 'Well, if it really helps, ready to allocate up to $500'},
         ]
         
         transcript.extend(simulated_flow)
@@ -469,7 +469,7 @@ class VoiceSalesAgent:
             'step': 2,
             'day': 1,
             'type': 'email',
-            'subject': 'AI Genesis — материалы по автоматизации',
+            'subject': 'AI Genesis — automation materials',
             'purpose': 'Send case studies and pricing'
         })
         
@@ -488,9 +488,9 @@ class VoiceSalesAgent:
             'step': 4,
             'day': 7,
             'type': 'voice_message',
-            'text': f"""Привет, {lead.get('name')}! Это AI Genesis. 
-            Напоминаю про пилот за $350 — он всё ещё доступен. 
-            Если заинтересовало, просто ответьте на это сообщение.""",
+            'text': f"""Hi {lead.get('name')}! This is AI Genesis. 
+Reminding you about the $350 pilot — it's still available. 
+If interested, just reply to this message.""",
             'purpose': 'Gentle reminder'
         })
         
@@ -553,9 +553,9 @@ Commands:
 
 Examples:
   python3 voice_sales_agent.py script qualification
-  python3 voice_sales_agent.py simulate "Иван" "+1-555-123-4567"
-  python3 voice_sales_agent.py tts "Здравствуйте! Это AI Genesis"
-  python3 voice_sales_agent.py objection "дорого"
+  python3 voice_sales_agent.py simulate "John" "+1-555-123-4567"
+  python3 voice_sales_agent.py tts "Hello! This is AI Genesis"
+  python3 voice_sales_agent.py objection "too expensive"
   python3 voice_sales_agent.py analytics 30
         """)
         sys.exit(0)
@@ -581,8 +581,8 @@ Examples:
         contact = {
             'name': name,
             'phone': phone,
-            'business_type': 'салон красоты',
-            'agent_name': 'Алекс'
+            'business_type': 'beauty salon',
+            'agent_name': 'Alex'
         }
         
         print(f"\n📞 Simulating call to {name} ({phone})...")
