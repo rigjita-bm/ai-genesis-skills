@@ -15,6 +15,7 @@ Unlike generic robocalls, Voice Sales Agent creates **personalized, context-awar
 | Follow-up | None | Multi-touch sequences |
 | CRM | Manual entry | Auto-sync |
 | Analytics | Call count | Qualification scores, insights |
+| **Multi-language** | English only | **English, Russian, Spanish** |
 
 ## Installation
 
@@ -35,13 +36,13 @@ python3 voice_sales_agent.py
 python3 voice_sales_agent.py script qualification
 
 # Simulate a call
-python3 voice_sales_agent.py simulate "Иван" "+1-555-123-4567"
+python3 voice_sales_agent.py simulate "John" "+1-555-123-4567"
 
 # Generate objection handler
-python3 voice_sales_agent.py objection "дорого"
+python3 voice_sales_agent.py objection "too expensive"
 
 # View call sequence
-python3 voice_sales_agent.py sequence "Мария" "+1-555-987-6543"
+python3 voice_sales_agent.py sequence "Maria" "+1-555-987-6543"
 ```
 
 ## Core Features
@@ -52,14 +53,14 @@ Scripts adapt based on conversation flow:
 
 ```python
 # Opening personalizes automatically
-"Здравствуйте, {name}! Меня зовут {agent_name}, я из AI Genesis. 
-Вы оставляли заявку насчёт автоматизации для {business_type}."
+"Hello {name}! This is {agent_name} from AI Genesis. 
+You left a request on our website about automation for {business_type}."
 
 # Questions branch based on answers
-if "50 клиентов в неделю":
-    follow_up = "Как вы справляетесь с таким потоком?"
-elif "10 клиентов":
-    follow_up = "А вы вручную всё ведёте?"
+if "50 clients per week":
+    follow_up = "How do you handle that volume?"
+elif "10 clients":
+    follow_up = "Are you managing everything manually?"
 ```
 
 **Available Scripts:**
@@ -75,37 +76,37 @@ elif "10 клиентов":
 Pre-built responses for common objections:
 
 ```bash
-python3 voice_sales_agent.py objection "дорого"
+python3 voice_sales_agent.py objection "too expensive"
 
 # Output:
-💬 Objection: дорого
+💬 Objection: too expensive
 
 🎯 Handler:
-Я понимаю. Давайте посчитаем: сколько часов в неделю вы тратите 
-на переписку с клиентами? Умножьте на вашу часовую ставку — 
-это ваша реальная стоимость. Пилот за $350 окупается, 
-если экономит всего 7 часов.
+I understand. Let's calculate: how many hours per week do you spend 
+on client communication? Multiply by your hourly rate — 
+that's your real cost. The $350 pilot pays for itself 
+if it saves just 7 hours.
 ```
 
 **Covered Objections:**
-- 💰 "Дорого" → ROI calculator framing
-- ⏰ "Не сейчас" → Urgency without pressure
-- 🤔 "Нужно подумать" → Cost of inaction
-- ❓ "Не уверен" → Risk reversal (pilot)
-- ✅ "Уже есть система" → Gap analysis
-- 🏃 "Нет времени" → Time investment frame
-- 🔧 "Сам сделаю" → Build vs buy
-- 👥 "Надо спросить партнёра" → Multi-threading
+- 💰 "Too expensive" → ROI calculator framing
+- ⏰ "Not now" → Urgency without pressure
+- 🤔 "Need to think" → Cost of inaction
+- ❓ "Not sure" → Risk reversal (pilot)
+- ✅ "Already have a system" → Gap analysis
+- 🏃 "No time" → Time investment frame
+- 🔧 "I'll build it myself" → Build vs buy
+- 👥 "Need to ask partner" → Multi-threading
 
 ### 3. 📞 Multi-Touch Call Sequences
 
 Automated follow-up sequences:
 
 ```bash
-python3 voice_sales_agent.py sequence "Иван" "+1-555-123-4567"
+python3 voice_sales_agent.py sequence "John" "+1-555-123-4567"
 
 # Output:
-📞 Call Sequence for Иван:
+📞 Call Sequence for John:
 
 Step 1 (Day +0):
   Type: call
@@ -114,7 +115,7 @@ Step 1 (Day +0):
 
 Step 2 (Day +1):
   Type: email
-  Subject: AI Genesis — материалы по автоматизации
+  Subject: AI Genesis — automation materials
   Purpose: Send case studies and pricing
 
 Step 3 (Day +3):
@@ -137,10 +138,10 @@ Every call gets a qualification score (0-100):
 
 | Factor | Weight | Indicator |
 |--------|--------|-----------|
-| Budget mentioned | 25% | "$500" vs "посмотрим" |
+| Budget mentioned | 25% | "$500" vs "we'll see" |
 | Pain point clear | 20% | Specific problem described |
-| Decision maker | 20% | "Я решаю" vs "надо спросить" |
-| Timeline | 20% | "В течение месяца" vs "не знаю" |
+| Decision maker | 20% | "I decide" vs "need to ask" |
+| Timeline | 20% | "Within a month" vs "don't know" |
 | Previous attempts | 15% | Tried other solutions |
 
 **Score Interpretation:**
@@ -169,6 +170,31 @@ python3 voice_sales_agent.py analytics 30
       no_answer: 9 calls
 ```
 
+## Multi-Language Support
+
+Voice Sales Agent supports multiple languages for immigrant business communities:
+
+| Language | Use Case | Voice Config |
+|----------|----------|--------------|
+| **English** | Default business calls | `en-US` |
+| **Russian** | Russian-speaking immigrants | `ru-RU` + slight accent |
+| **Spanish** | Hispanic communities | `es-US` |
+
+### Russian Language Example
+
+```python
+# For Russian-speaking clients (immigrant businesses)
+contact = {
+    'name': 'Ivan',
+    'phone': '+1-555-123-4567',
+    'business_type': 'beauty salon',
+    'language': 'russian'
+}
+
+# Script automatically adapts to Russian
+# "Zdravstvuyte, Ivan! eto Alex iz AI Genesis..."
+```
+
 ## API Usage
 
 ### Initialize Agent
@@ -183,19 +209,19 @@ agent = VoiceSalesAgent()
 
 ```python
 contact = {
-    'name': 'Иван',
+    'name': 'John',
     'phone': '+1-555-123-4567',
-    'business_type': 'салон красоты',
-    'agent_name': 'Алекс'
+    'business_type': 'beauty salon',
+    'agent_name': 'Alex'
 }
 
 opening = agent.generate_call_script(contact, 'qualification')
 print(opening)
 
 # Output:
-# Здравствуйте, Иван! Меня зовут Алекс, я из AI Genesis.
-# Вы оставляли заявку на нашем сайте насчёт автоматизации для салона красоты.
-# У вас есть 5 минут, чтобы я рассказал, как это работает?
+# Hello John! This is Alex from AI Genesis.
+# You left a request on our website about automation for beauty salon.
+# Do you have 5 minutes for me to explain how it works?
 ```
 
 ### Simulate Call (for testing)
@@ -217,20 +243,28 @@ for entry in call.transcript:
 ```python
 # Generate voice audio
 audio_path = agent.generate_tts(
-    text="Здравствуйте! Это AI Genesis.",
+    text="Hello! This is AI Genesis.",
     voice='nova',  # or 'onyx' for male
     output_path='/path/to/output.mp3'
+)
+
+# For Russian language
+audio_path_ru = agent.generate_tts(
+    text="Zdravstvuyte! Eto AI Genesis.",
+    voice='nova',
+    language='russian',
+    output_path='/path/to/output_ru.mp3'
 )
 ```
 
 ### Handle Objections
 
 ```python
-objection = "дорого"
+objection = "too expensive"
 handler = agent.get_objection_handler(objection)
 
 print(handler)
-# Я понимаю. Давайте посчитаем: сколько часов...
+# I understand. Let's calculate: how many hours...
 ```
 
 ### Export to CRM
@@ -259,7 +293,7 @@ agent.voice_config = {
     'provider': 'elevenlabs',
     'default_voice': 'onyx',      # Warm male
     'female_voice': 'nova',       # Warm female
-    'accent': 'slight_russian',   # Subtle accent
+    'accent': 'slight_russian',   # For immigrant authenticity
     'speed': 0.95,                # Slightly slower
     'stability': 0.7,
     'similarity_boost': 0.8
@@ -275,8 +309,8 @@ agent.voice_config = {
 # Google Cloud
 agent.voice_config = {
     'provider': 'google',
-    'default_voice': 'ru-RU-Wavenet-B',
-    'female_voice': 'ru-RU-Wavenet-A'
+    'default_voice': 'en-US-Wavenet-B',
+    'female_voice': 'en-US-Wavenet-A'
 }
 ```
 
@@ -286,7 +320,7 @@ agent.voice_config = {
 |-------|---------|--------|
 | Speed | 0.95 | Clear, not rushed |
 | Stability | 0.7 | Natural variation |
-| Accent | slight_russian | Authentic, trustworthy |
+| Accent | slight_russian | Authentic for immigrants |
 | Warmth | High | Friendly, approachable |
 
 ## Call Script Structure
@@ -299,23 +333,23 @@ agent.voice_config = {
     "questions": [
         {
             "id": "business_type",
-            "question": "Расскажите, чем занимается ваш бизнес?",
+            "question": "Tell me about your business. How many clients per week?",
             "purpose": "Understand business size",
             "follow_up": {...}  # Branching logic
         },
         {
             "id": "pain_point",
-            "question": "Что больше всего отнимает ваше время?",
+            "question": "What takes most of your time right now?",
             "purpose": "Identify pain point"
         },
         {
             "id": "budget",
-            "question": "В какой бюджет вы смотрите?",
+            "question": "What budget are you looking at?",
             "purpose": "Budget qualification"
         },
         {
             "id": "timeline",
-            "question": "Насколько срочно нужно решение?",
+            "question": "How urgent is this need?",
             "purpose": "Timeline"
         }
     ],
@@ -350,10 +384,10 @@ CREATE TABLE calls (
 | Command | Description | Example |
 |---------|-------------|---------|
 | `script` | View call script | `script qualification` |
-| `simulate` | Simulate call | `simulate "Иван" "+1-555-123-4567"` |
-| `tts` | Generate audio | `tts "Здравствуйте!"` |
-| `objection` | Get handler | `objection "дорого"` |
-| `sequence` | Call sequence | `sequence "Мария" "+1-555-987-6543"` |
+| `simulate` | Simulate call | `simulate "John" "+1-555-123-4567"` |
+| `tts` | Generate audio | `tts "Hello!"` |
+| `objection` | Get handler | `objection "too expensive"` |
+| `sequence` | Call sequence | `sequence "Maria" "+1-555-987-6543"` |
 | `analytics` | View stats | `analytics 30` |
 | `export` | CRM export | `export abc123` |
 
@@ -376,7 +410,8 @@ for lead in hot_leads:
     contact = {
         'name': lead['name'],
         'phone': lead['phone'],
-        'business_type': lead['business_type']
+        'business_type': lead['business_type'],
+        'language': lead.get('language', 'english')
     }
     
     call = voice_agent.simulate_call(contact)
@@ -398,8 +433,8 @@ if call.outcome == CallOutcome.QUALIFIED:
     
     # Generate relevant carousel
     carousel = carousel_pro.generate(
-        topic=f"Автоматизация для {business_type}",
-        mode='wellness' if 'салон' in business_type else 'default'
+        topic=f"Automation for {business_type}",
+        mode='wellness' if 'salon' in business_type else 'default'
     )
     
     # Send via WhatsApp/Telegram
@@ -441,7 +476,7 @@ if call.outcome == CallOutcome.QUALIFIED:
 ### Simulated Call
 
 ```
-📞 Simulating call to Иван (+1-555-123-4567)...
+📞 Simulating call to John (+1-555-123-4567)...
 
 ✅ Call completed!
    ID: abc123
@@ -451,11 +486,11 @@ if call.outcome == CallOutcome.QUALIFIED:
    Follow-up: 2026-03-30
 
 📝 Transcript preview:
-   agent: Здравствуйте, Иван! Меня зовут Алекс...
-   customer: Да, удобно, расскажите
-   agent: Расскажите, чем занимается ваш бизнес?...
-   customer: У меня салон красоты, около 50 клиентов...
-   agent: Отлично! А как сейчас ведёте записи?...
+   agent: Hello John! This is Alex from AI Genesis...
+   customer: Yes, convenient, tell me more
+   agent: Tell me about your business...
+   customer: I have a beauty salon, about 50 clients...
+   agent: Great! How do you manage appointments now?...
    ... (4 more entries)
 ```
 
@@ -478,13 +513,23 @@ if call.outcome == CallOutcome.QUALIFIED:
 
 | Aspect | Human Sales Rep | Generic Robocaller | Voice Sales Agent |
 |--------|-----------------|-------------------|-------------------|
-| Cost | $3000+/month | $50/month | $100/month |
+| Cost | $3000+/month | $50/month | **FREE** |
 | Availability | 8 hours/day | 24/7 | 24/7 |
 | Consistency | Variable | Fixed | Adaptive |
 | Scale | 10 calls/day | Unlimited | Unlimited |
 | CRM Entry | Manual | None | Auto-sync |
 | Analytics | Subjective | Basic | Comprehensive |
-| Languages | 1-2 | 1 | 3+ |
+| **Languages** | 1-2 | 1 | **3+** |
+| **Russian** | ❌ | ❌ | **✅** |
+
+## Target Audience
+
+Voice Sales Agent is specifically designed for:
+
+- **Immigrant business owners** in NYC (Russian, Spanish speaking)
+- **Service businesses**: salons, clinics, repair services
+- **Small teams**: 1-10 employees, owner-operated
+- **High-touch sales**: consultation required before purchase
 
 ## Files
 
@@ -493,8 +538,8 @@ if call.outcome == CallOutcome.QUALIFIED:
 
 ## Version History
 
-- **v1.0** (2026-03-27) — Voice Sales Agent: Dynamic scripts, objection handling, CRM integration
+- **v1.0** (2026-03-27) — Voice Sales Agent: Dynamic scripts, objection handling, CRM integration, multi-language support
 
 ## Tags
 
-voice-ai, sales-automation, outbound-calls, qualification, objection-handling, crm-integration
+voice-ai, sales-automation, outbound-calls, qualification, objection-handling, crm-integration, multi-language, russian-speaking
